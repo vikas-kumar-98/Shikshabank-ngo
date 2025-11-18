@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShikshaBank.org - Empowering Through Education</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
     <style>
         /* Reset and Base Styles */
         * {
@@ -25,6 +26,10 @@
             --transition: all 0.3s ease;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
             --radius: 8px;
+            --green: #27ae60;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+            --yellow: #f1c40f;
         }
 
         html {
@@ -46,7 +51,8 @@
 
         /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
         .navbar {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
             position: fixed;
             top: 0;
@@ -58,6 +64,7 @@
 
         .navbar.scrolled {
             padding: 5px 0;
+            background-color: rgba(255, 255, 255, 0.98);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
 
@@ -84,12 +91,14 @@
         .logo-icon {
             font-size: 2rem;
             color: var(--secondary);
+            transition: var(--transition);
         }
 
         .logo-text {
             font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
+            transition: var(--transition);
         }
 
         .logo-text span {
@@ -294,17 +303,30 @@
 
         /* ========== HERO SECTION ========== */
         .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(52, 152, 219, 0.8) 100%), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: white;
-            padding: 10rem 0 6rem;
+            padding: 12rem 0 8rem;
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.3) 100%);
         }
 
         .hero-content {
+            position: relative;
+            z-index: 2;
             max-width: 800px;
             margin: 0 auto;
         }
@@ -313,12 +335,23 @@
             font-size: 3.5rem;
             margin-bottom: 1.5rem;
             line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .hero p {
             font-size: 1.3rem;
             margin-bottom: 2.5rem;
             opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -341,18 +374,61 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .btn-secondary {
+        .btn-outline {
             background-color: transparent;
             border: 2px solid white;
-            margin-left: 1rem;
+            color: white;
         }
 
-        .btn-secondary:hover {
+        .btn-outline:hover {
             background-color: white;
             color: var(--primary);
         }
 
-        /* ========== FEATURES SECTION ========== */
+        .btn-large {
+            padding: 1.2rem 2.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* ========== FEATURED STATS ========== */
+        .stats-section {
+            background-color: white;
+            padding: 4rem 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem 1rem;
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* ========== PROGRAMS SECTION ========== */
         .section {
             padding: 6rem 0;
         }
@@ -389,58 +465,9 @@
             font-size: 1.1rem;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .feature-card {
-            background-color: white;
-            border-radius: var(--radius);
-            padding: 2.5rem 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(to right, var(--secondary), var(--accent));
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 3.5rem;
-            color: var(--secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-card h3 {
-            margin-bottom: 1rem;
-            color: var(--primary);
-            font-size: 1.5rem;
-        }
-
-        /* ========== PROGRAMS SECTION ========== */
-        .programs {
-            background-color: var(--light);
-        }
-
         .programs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
 
@@ -450,40 +477,46 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
-        }
-
-        .program-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .program-img {
-            height: 220px;
-            background-size: cover;
-            background-position: center;
             position: relative;
         }
 
-        .program-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 1.5rem;
-            color: white;
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .program-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .program-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .program-card:hover .program-image img {
+            transform: scale(1.1);
         }
 
         .program-content {
-            padding: 1.8rem;
+            padding: 2rem;
         }
 
-        .program-content h3 {
-            margin-bottom: 0.8rem;
+        .program-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .program-card h3 {
+            margin-bottom: 1rem;
             color: var(--primary);
         }
 
-        .program-content p {
+        .program-card p {
             margin-bottom: 1.5rem;
             color: var(--text-light);
         }
@@ -491,6 +524,7 @@
         .program-link {
             display: inline-flex;
             align-items: center;
+            gap: 0.5rem;
             color: var(--secondary);
             text-decoration: none;
             font-weight: 600;
@@ -498,78 +532,174 @@
         }
 
         .program-link:hover {
-            gap: 10px;
+            gap: 1rem;
         }
 
         /* ========== IMPACT SECTION ========== */
-        .impact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .impact-card {
-            background-color: white;
-            border-radius: var(--radius);
-            padding: 2.5rem 1.5rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .impact-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .impact-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--secondary);
-            margin-bottom: 0.5rem;
-            line-height: 1;
-        }
-
-        .impact-card p {
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* ========== TESTIMONIALS SECTION ========== */
-        .testimonials {
+        .impact-section {
             background-color: var(--light);
         }
 
-        .testimonials-grid {
+        .impact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .impact-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .impact-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .impact-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .impact-visual {
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, var(--secondary), var(--purple));
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .impact-visual::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+
+        .floating-elements {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .floating-element {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 20%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 60%;
+            left: 70%;
+            animation-delay: 1s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 70px;
+            height: 70px;
+            top: 70%;
+            left: 30%;
+            animation-delay: 2s;
+        }
+
+        .floating-element i {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* ========== STORIES SECTION ========== */
+        .stories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2.5rem;
         }
 
-        .testimonial-card {
+        .story-card {
             background-color: white;
             border-radius: var(--radius);
             padding: 2.5rem;
             box-shadow: var(--shadow);
+            transition: var(--transition);
             position: relative;
         }
 
-        .testimonial-card::before {
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .story-content::before {
             content: '\201C';
-            font-size: 5rem;
+            font-size: 4rem;
             color: var(--light);
             position: absolute;
-            top: 10px;
-            left: 20px;
+            top: -20px;
+            left: -10px;
             line-height: 1;
         }
 
-        .testimonial-content {
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .testimonial-author {
+        .story-author {
             display: flex;
             align-items: center;
         }
@@ -600,9 +730,10 @@
 
         /* ========== CTA SECTION ========== */
         .cta-section {
-            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9) 0%, rgba(52, 152, 219, 0.8) 100%), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
             text-align: center;
             padding: 6rem 0;
@@ -620,25 +751,96 @@
             opacity: 0.9;
         }
 
+        /* ========== PARTNERS SECTION ========== */
+        .partners-section {
+            background-color: var(--light);
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* ========== NEWSLETTER SECTION ========== */
+        .newsletter-section {
+            background-color: white;
+            padding: 4rem 0;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid var(--light);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-input:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
         /* ========== FOOTER ========== */
         footer {
             background-color: var(--dark);
             color: white;
-            padding: 5rem 0 2rem;
+            padding: 4rem 0 2rem;
         }
 
         .footer-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
+            gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .footer-col h3 {
             margin-bottom: 1.5rem;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             position: relative;
-            padding-bottom: 0.8rem;
+            padding-bottom: 0.5rem;
         }
 
         .footer-col h3::after {
@@ -647,13 +849,8 @@
             bottom: 0;
             left: 0;
             width: 50px;
-            height: 3px;
+            height: 2px;
             background-color: var(--secondary);
-        }
-
-        .footer-col p {
-            margin-bottom: 1.5rem;
-            color: #bdc3c7;
         }
 
         .footer-col ul {
@@ -672,21 +869,20 @@
 
         .footer-col a:hover {
             color: white;
-            padding-left: 5px;
         }
 
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 42px;
-            height: 42px;
+            width: 40px;
+            height: 40px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             transition: var(--transition);
@@ -699,10 +895,10 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 2.5rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: #bdc3c7;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         /* ========== RESPONSIVE ADJUSTMENTS ========== */
@@ -711,32 +907,63 @@
                 font-size: 2.8rem;
             }
             
-            .hero p {
-                font-size: 1.1rem;
+            .section-title h2 {
+                font-size: 2rem;
             }
             
-            .section-title h2 {
-                font-size: 2.2rem;
+            .impact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
             }
         }
 
         @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
             .hero {
-                padding: 8rem 0 4rem;
+                padding: 10rem 0 6rem;
             }
-            
+
             .hero h1 {
-                font-size: 2.3rem;
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
             }
             
-            .btn-secondary {
-                margin-left: 0;
-                margin-top: 1rem;
-                display: block;
+            .cta-section h2 {
+                font-size: 2.2rem;
             }
             
-            .section {
-                padding: 4rem 0;
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -745,16 +972,20 @@
                 font-size: 1.2rem;
             }
             
-            .hero h1 {
-                font-size: 2rem;
+            .section {
+                padding: 4rem 0;
             }
             
-            .features-grid, .programs-grid, .testimonials-grid {
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
             
-            .impact-grid {
-                grid-template-columns: repeat(2, 1fr);
+            .programs-grid, .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .impact-stats {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -825,106 +1056,92 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container hero-content">
-            <h1>Empowering Children Through Education</h1>
-            <p>ShikshaBank.org is committed to providing quality education to underprivileged children, breaking the cycle of poverty through learning and opportunity.</p>
-            <div class="hero-buttons">
-                <a href="donate.html" class="btn">Donate Now</a>
-                <a href="about.html" class="btn btn-secondary">Learn More</a>
+        <div class="container hero-content" data-aos="fade-up">
+            <h1>Empowering Children Through Quality Education</h1>
+            <p>ShikshaBank is transforming lives by providing access to quality education for underprivileged children across India. Join us in our mission to break the cycle of poverty through education.</p>
+            <div class="hero-btns">
+                <a href="donate.html" class="btn btn-large">Donate Now</a>
+                <a href="about.html" class="btn btn-outline btn-large">Learn More</a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="section">
+    <!-- Featured Stats -->
+    <section class="stats-section">
         <div class="container">
-            <div class="section-title">
-                <h2>What We Do</h2>
-                <p>Our comprehensive programs focus on holistic development and creating sustainable educational opportunities.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <h3>School Support</h3>
-                    <p>We provide resources, infrastructure, and educational materials to schools in underserved communities.</p>
+            <div class="stats-grid">
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
+                    <span class="stat-number">75,000+</span>
+                    <span class="stat-label">Children Educated</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-book-reader"></i>
-                    </div>
-                    <h3>Digital Learning</h3>
-                    <p>Implementing technology-enabled learning solutions to bridge the digital divide in education.</p>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                    <span class="stat-number">650+</span>
+                    <span class="stat-label">Learning Centers</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-graduate"></i>
-                    </div>
-                    <h3>Scholarships</h3>
-                    <p>Financial assistance for talented students from economically disadvantaged backgrounds.</p>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                    <span class="stat-number">25</span>
+                    <span class="stat-label">States Reached</span>
                 </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <h3>Teacher Training</h3>
-                    <p>Professional development programs to enhance teaching quality and effectiveness.</p>
+                <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                    <span class="stat-number">86%</span>
+                    <span class="stat-label">Program Expenses</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Programs Section -->
-    <section class="section programs">
+    <section class="section">
         <div class="container">
-            <div class="section-title">
+            <div class="section-title" data-aos="fade-up">
                 <h2>Our Programs</h2>
-                <p>We run various initiatives to address different educational challenges in our communities.</p>
+                <p>Comprehensive educational initiatives designed to address diverse learning needs</p>
             </div>
             
             <div class="programs-grid">
-                <div class="program-card">
-                    <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                        <div class="program-overlay">
-                            <h3>Early Childhood Education</h3>
-                        </div>
+                <div class="program-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1516627145497-ae69578cfc06?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Early Education">
                     </div>
                     <div class="program-content">
-                        <p>Foundational learning programs for children aged 3-6 years to prepare them for formal schooling.</p>
+                        <div class="program-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h3>Early Childhood Education</h3>
+                        <p>Building strong foundations for children aged 3-6 years through play-based and activity-based learning approaches.</p>
                         <a href="early-education.html" class="program-link">
                             Learn More <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
                 
-                <div class="program-card">
-                    <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80');">
-                        <div class="program-overlay">
-                            <h3>Girl Child Education</h3>
-                        </div>
+                <div class="program-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Digital Learning">
                     </div>
                     <div class="program-content">
-                        <p>Special initiatives to promote and support education for girls in marginalized communities.</p>
-                        <a href="girl-education.html" class="program-link">
+                        <div class="program-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Digital Learning</h3>
+                        <p>Bridging the digital divide by providing access to technology and digital literacy skills for 21st-century readiness.</p>
+                        <a href="digital-learning.html" class="program-link">
                             Learn More <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
                 </div>
                 
-                <div class="program-card">
-                    <div class="program-img" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
-                        <div class="program-overlay">
-                            <h3>Vocational Training</h3>
-                        </div>
+                <div class="program-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Girl Education">
                     </div>
                     <div class="program-content">
-                        <p>Skill development programs for youth to enhance employability and entrepreneurship.</p>
-                        <a href="vocational.html" class="program-link">
+                        <div class="program-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>Girl Education</h3>
+                        <p>Empowering girls through education by removing barriers and creating safe learning environments.</p>
+                        <a href="girl-education.html" class="program-link">
                             Learn More <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -934,81 +1151,97 @@
     </section>
 
     <!-- Impact Section -->
-    <section class="section">
+    <section class="section impact-section">
         <div class="container">
-            <div class="section-title">
-                <h2>Our Impact</h2>
-                <p>Transforming lives through education - one child at a time</p>
-            </div>
-            
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-number">15,000+</div>
-                    <p>Children Impacted</p>
+            <div class="impact-container">
+                <div class="impact-content" data-aos="fade-right">
+                    <h2>Creating Lasting Impact</h2>
+                    <p>At ShikshaBank, we measure our success by the tangible difference we make in children's lives. Our evidence-based approach ensures that every intervention creates sustainable change.</p>
+                    <p>We focus on holistic development that goes beyond academics, nurturing confident, curious, and compassionate individuals who can transform their communities.</p>
+                    
+                    <div class="impact-stats">
+                        <div class="impact-stat">
+                            <span class="impact-stat-number">92%</span>
+                            <span class="impact-stat-label">School Readiness</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-stat-number">84%</span>
+                            <span class="impact-stat-label">Employment Rate</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-stat-number">67%</span>
+                            <span class="impact-stat-label">Higher Education</span>
+                        </div>
+                        <div class="impact-stat">
+                            <span class="impact-stat-number">58%</span>
+                            <span class="impact-stat-label">Girl Students</span>
+                        </div>
+                    </div>
+                    
+                    <a href="impact.html" class="btn" style="margin-top: 2rem;">View Full Impact Report</a>
                 </div>
                 
-                <div class="impact-card">
-                    <div class="impact-number">250+</div>
-                    <p>Schools Supported</p>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-number">1,200+</div>
-                    <p>Teachers Trained</p>
-                </div>
-                
-                <div class="impact-card">
-                    <div class="impact-number">18</div>
-                    <p>States Reached</p>
+                <div class="impact-visual" data-aos="fade-left">
+                    <div class="floating-elements">
+                        <div class="floating-element">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="floating-element">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="floating-element">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="section testimonials">
+    <!-- Success Stories -->
+    <section class="section">
         <div class="container">
-            <div class="section-title">
-                <h2>What People Say</h2>
-                <p>Hear from our beneficiaries, volunteers, and supporters</p>
+            <div class="section-title" data-aos="fade-up">
+                <h2>Success Stories</h2>
+                <p>Real transformations from children and communities we've served</p>
             </div>
             
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Thanks to ShikshaBank, I was able to continue my education and become the first person in my family to attend college. They didn't just provide financial support but also mentorship that changed my life."</p>
+            <div class="stories-grid">
+                <div class="story-card" data-aos="fade-up" data-aos-delay="0">
+                    <div class="story-content">
+                        "I was supposed to get married at 16, but the ShikshaBank scholarship allowed me to continue my education. Today, I'm the first engineer in my family and village."
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">AS</div>
+                    <div class="story-author">
+                        <div class="author-avatar">PK</div>
                         <div class="author-info">
-                            <h4>Anjali Sharma</h4>
-                            <p>Scholarship Recipient</p>
+                            <h4>Priya Kumar</h4>
+                            <p>Software Engineer</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"As a volunteer with ShikshaBank, I've seen firsthand how their programs transform communities. The digital learning initiative has brought quality education to remote villages that had no access before."</p>
+                <div class="story-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="story-content">
+                        "The vocational training in electrical work transformed my life. From daily wage laborer to business owner, I now employ two people from my community."
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">RK</div>
+                    <div class="story-author">
+                        <div class="author-avatar">RS</div>
                         <div class="author-info">
-                            <h4>Rajesh Kumar</h4>
-                            <p>Volunteer</p>
+                            <h4>Rahul Sharma</h4>
+                            <p>Electrician & Entrepreneur</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>"Our corporate partnership with ShikshaBank has been incredibly rewarding. Their transparency and measurable impact make them an ideal organization to support through our CSR initiatives."</p>
+                <div class="story-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="story-content">
+                        "As a teacher in a ShikshaBank school, I've received continuous training and support. My students are thriving, and I'm proud to be part of their journey."
                     </div>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">PP</div>
+                    <div class="story-author">
+                        <div class="author-avatar">SP</div>
                         <div class="author-info">
-                            <h4>Priya Patel</h4>
-                            <p>Corporate Partner</p>
+                            <h4>Sunita Patel</h4>
+                            <p>Teacher</p>
                         </div>
                     </div>
                 </div>
@@ -1018,11 +1251,51 @@
 
     <!-- CTA Section -->
     <section class="cta-section">
+        <div class="container" data-aos="fade-up">
+            <h2>Join Our Mission Today</h2>
+            <p>Your support can transform a child's life through education. Together, we can build a brighter future for generations to come.</p>
+            <a href="donate.html" class="btn btn-large">Donate Now</a>
+            <a href="contact.html" class="btn btn-outline btn-large">Volunteer</a>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="section partners-section">
         <div class="container">
-            <h2>Join Us in Our Mission</h2>
-            <p>Together, we can transform lives through education and create a brighter future for generations to come.</p>
-            <a href="donate.html" class="btn">Donate Now</a>
-            <a href="contact.html" class="btn btn-secondary">Volunteer With Us</a>
+            <div class="section-title" data-aos="fade-up">
+                <h2>Our Partners</h2>
+                <p>Collaborating with organizations that share our vision for educational transformation</p>
+            </div>
+            
+            <div class="partners-grid">
+                <div class="partner-logo" data-aos="fade-up" data-aos-delay="0">
+                    <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">TechEd Foundation</div>
+                </div>
+                <div class="partner-logo" data-aos="fade-up" data-aos-delay="100">
+                    <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Global Giving</div>
+                </div>
+                <div class="partner-logo" data-aos="fade-up" data-aos-delay="200">
+                    <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">EduCare Trust</div>
+                </div>
+                <div class="partner-logo" data-aos="fade-up" data-aos-delay="300">
+                    <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Future Leaders</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-container" data-aos="fade-up">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter to receive updates on our programs, impact stories, and opportunities to get involved.</p>
+                
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -1080,7 +1353,15 @@
         </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script>
+        // Initialize AOS (Animate On Scroll)
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
+        });
+
         // Mobile Navigation Toggle
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('nav-menu');
@@ -1099,4 +1380,84 @@
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 overlay.classList.remove('active');
-                document
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Counter Animation for Stats
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace('+', '');
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment) + '+';
+                    setTimeout(animateCounters, 1);
+                } else {
+                    counter.innerText = target + '+';
+                }
+            });
+        };
+
+        // Initialize counters when they come into view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Set data-target attributes based on current text
+                    document.querySelectorAll('.stat-number').forEach(stat => {
+                        const currentValue = stat.innerText.replace('+', '');
+                        stat.setAttribute('data-target', currentValue);
+                        stat.innerText = '0+';
+                    });
+                    
+                    setTimeout(animateCounters, 500);
+                    observer.disconnect();
+                }
+            });
+        });
+
+        observer.observe(document.querySelector('.stats-section'));
+    </script>
+</body>
+</html>
