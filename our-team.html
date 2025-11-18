@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - ShikshaBank.org</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 8px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link.active {
+            color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary);
+            border-left-color: var(--secondary);
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding-left: 20px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-cta {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown > .nav-link::after {
+                content: '\f078';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin-left: auto;
+                transition: var(--transition);
+            }
+            
+            .dropdown.active > .nav-link::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* ========== PAGE CONTENT STYLES ========== */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1551135049-8a33b42738b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--light);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* ========== TEAM STYLES ========== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .team-card {
+            background-color: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-img {
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .team-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            padding: 1.5rem;
+            color: white;
+            text-align: left;
+        }
+
+        .team-content {
+            padding: 2rem;
+        }
+
+        .team-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .team-role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+            font-size: 1.1rem;
+        }
+
+        .team-bio {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .team-social a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--light);
+            border-radius: 50%;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .team-social a:hover {
+            background-color: var(--secondary);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ========== VOLUNTEERS SECTION ========== */
+        .volunteers {
+            background-color: var(--light);
+        }
+
+        .volunteer-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 2.5rem 1.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        .stat-card p {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* ========== ADVISORY BOARD ========== */
+        .advisory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .advisor-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advisor-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+
+        .advisor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .advisor-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--secondary);
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid var(--secondary);
+        }
+
+        .advisor-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .advisor-role {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .advisor-org {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ADJUSTMENTS ========== */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .team-grid, .advisory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .volunteer-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation System -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Shiksha<span>Bank</span></div>
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Our Story</a>
+                        <a href="mission.html">Mission & Vision</a>
+                        <a href="impact.html">Our Impact</a>
+                        <a href="financials.html">Financials</a>
+                    </div>
+                </li>
+                <li><a href="our-team.html" class="nav-link active"><i class="fas fa-users"></i> Our Team</a></li>
+                <li class="dropdown">
+                    <a href="programs.html" class="nav-link"><i class="fas fa-project-diagram"></i> Programs</a>
+                    <div class="dropdown-content">
+                        <a href="early-education.html">Early Education</a>
+                        <a href="digital-learning.html">Digital Learning</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="vocational.html">Vocational Training</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Meet Our Team</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li>Our Team</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Leadership Team -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Leadership Team</h2>
+                    <p>Meet the dedicated individuals who guide our organization and drive our mission forward.</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                            <div class="team-overlay">
+                                <h3>Dr. Anjali Sharma</h3>
+                                <span>Founder & CEO</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Education specialist with 15+ years of experience in educational reform and community development. PhD in Education from Delhi University.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                            <div class="team-overlay">
+                                <h3>Rajesh Kumar</h3>
+                                <span>Operations Director</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Manages field operations across 18 states, ensuring program effectiveness and community engagement. Former government education officer.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80');">
+                            <div class="team-overlay">
+                                <h3>Priya Patel</h3>
+                                <span>Program Director</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Leads curriculum development and teacher training programs with expertise in educational psychology. M.Ed from TISS Mumbai.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program Team -->
+        <section class="section mission-vision">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Program Team</h2>
+                    <p>Our dedicated program managers who implement our initiatives on the ground.</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                            <div class="team-overlay">
+                                <h3>Arun Mehta</h3>
+                                <span>Digital Learning Manager</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Technology enthusiast bringing digital education solutions to remote communities. Former software engineer with passion for social impact.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616c113a1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                            <div class="team-overlay">
+                                <h3>Sunita Reddy</h3>
+                                <span>Girl Education Coordinator</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Champions gender equality in education through targeted programs for girls. Background in women's studies and community development.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card">
+                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                            <div class="team-overlay">
+                                <h3>Vikram Singh</h3>
+                                <span>Vocational Training Head</span>
+                            </div>
+                        </div>
+                        <div class="team-content">
+                            <p class="team-bio">Develops skill-based programs to enhance employability among youth. Former HR professional with corporate training experience.</p>
+                            <div class="team-social">
+                                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fas fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advisory Board -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Advisory Board</h2>
+                    <p>Esteemed professionals who provide strategic guidance and oversight to our organization.</p>
+                </div>
+                
+                <div class="advisory-grid">
+                    <div class="advisor-card">
+                        <div class="advisor-avatar">PS</div>
+                        <h3>Prof. Sanjay Mehta</h3>
+                        <span class="advisor-role">Education Policy Expert</span>
+                        <p class="advisor-org">Former Vice Chancellor, State University</p>
+                        <p>Provides guidance on educational policy and curriculum development frameworks.</p>
+                    </div>
+                    
+                    <div class="advisor-card">
+                        <div class="advisor-avatar">RM</div>
+                        <h3>Rohit Malhotra</h3>
+                        <span class="advisor-role">Corporate Strategy</span>
+                        <p class="advisor-org">CEO, TechSolutions Inc.</p>
+                        <p>Advises on organizational strategy, partnerships, and sustainable growth models.</p>
+                    </div>
+                    
+                    <div class="advisor-card">
+                        <div class="advisor-avatar">NK</div>
+                        <h3>Neha Kapoor</h3>
+                        <span class="advisor-role">Child Psychology</span>
+                        <p class="advisor-org">Child Psychologist & Author</p>
+                        <p>Provides expertise on child development and learning methodologies.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteers Section -->
+        <section class="section volunteers">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Volunteers</h2>
+                    <p>We are grateful for our dedicated volunteers who make our work possible.</p>
+                </div>
+                
+                <div class="volunteer-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">450+</div>
+                        <p>Active Volunteers</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">18</div>
+                        <p>States Covered</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">25,000+</div>
+                        <p>Volunteer Hours</p>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <p>Satisfaction Rate</p>
+                    </div>
+                </div>
+                
+                <div style="text-align: center;">
+                    <h3 style="margin-bottom: 1.5rem;">Join Our Volunteer Team</h3>
+                    <p style="max-width: 600px; margin: 0 auto 2rem;">Whether you can teach, mentor, help with events, or provide professional skills, we have opportunities for everyone.</p>
+                    <a href="contact.html" class="btn">Become a Volunteer</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Join Our Mission</h2>
+                <p>Whether as a team member, volunteer, or partner, there are many ways to contribute to our cause.</p>
+                <a href="contact.html" class="btn">Get Involved</a>
+                <a href="donate.html" class="btn btn-secondary">Support Our Work</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ShikshaBank</h3>
+                    <p>ShikshaBank.org is a non-profit organization dedicated to providing quality education to underprivileged children across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Programs</h3>
+                    <ul>
+                        <li><a href="early-education.html">Early Childhood Education</a></li>
+                        <li><a href="girl-education.html">Girl Child Education</a></li>
+                        <li><a href="digital-learning.html">Digital Learning</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
+                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@shikshabank.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ShikshaBank.org. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

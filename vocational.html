@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocational Training - ShikshaBank.org</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
+            --orange: #e67e22;
+            --green: #27ae60;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 8px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link.active {
+            color: var(--orange);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--orange);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background-color: var(--orange);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #f39c12;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.3);
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: var(--orange);
+            border-left-color: var(--orange);
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding-left: 20px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-cta {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown > .nav-link::after {
+                content: '\f078';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin-left: auto;
+                transition: var(--transition);
+            }
+            
+            .dropdown.active > .nav-link::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* ========== PAGE CONTENT STYLES ========== */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--orange);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--light);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--orange);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* ========== PROGRAM HERO ========== */
+        .program-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .program-intro h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .program-intro p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .program-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .program-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--orange);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .program-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .program-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .program-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--orange);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #f39c12;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--orange);
+            color: var(--orange);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--orange);
+            color: white;
+        }
+
+        /* ========== PROGRAM FEATURES ========== */
+        .features-section {
+            background-color: var(--light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--orange), var(--green));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--orange);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* ========== COURSES SECTION ========== */
+        .courses-tabs {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--orange);
+            color: white;
+            border-color: var(--orange);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .course-category {
+            margin-bottom: 2rem;
+        }
+
+        .course-category h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-card {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-card h5 {
+            margin-bottom: 0.8rem;
+            color: var(--orange);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .course-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* ========== IMPACT SECTION ========== */
+        .impact-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--orange);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        /* ========== SUCCESS STORIES ========== */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .story-content::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: var(--light);
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            line-height: 1;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ========== GET INVOLVED ========== */
+        .involvement-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .involvement-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .involvement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .involvement-icon {
+            font-size: 3rem;
+            color: var(--orange);
+            margin-bottom: 1.5rem;
+        }
+
+        .involvement-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .involvement-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--orange);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--orange);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ADJUSTMENTS ========== */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .program-hero {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .program-image {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .program-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .features-grid, .stories-grid, .involvement-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation System -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Shiksha<span>Bank</span></div>
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Our Story</a>
+                        <a href="mission.html">Mission & Vision</a>
+                        <a href="impact.html">Our Impact</a>
+                        <a href="financials.html">Financials</a>
+                    </div>
+                </li>
+                <li><a href="our-team.html" class="nav-link"><i class="fas fa-users"></i> Our Team</a></li>
+                <li class="dropdown">
+                    <a href="programs.html" class="nav-link active"><i class="fas fa-project-diagram"></i> Programs</a>
+                    <div class="dropdown-content">
+                        <a href="early-education.html">Early Education</a>
+                        <a href="digital-learning.html">Digital Learning</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="vocational.html">Vocational Training</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Vocational Training</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programs.html">Programs</a></li>
+                    <li>Vocational Training</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Program Hero -->
+        <section class="section">
+            <div class="container">
+                <div class="program-hero">
+                    <div class="program-intro">
+                        <h2>Building Skills for Sustainable Livelihoods</h2>
+                        <p>Our Vocational Training program equips youth and adults with market-relevant skills to secure employment or start their own businesses, breaking the cycle of poverty through practical education.</p>
+                        <p>We focus on developing skills that are in high demand in local and global markets, providing comprehensive training that includes technical expertise, soft skills, and entrepreneurship development.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="stat-number">18,000+</span>
+                                <span class="stat-label">Trained</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="stat-number">84%</span>
+                                <span class="stat-label">Employment Rate</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="stat-number">25</span>
+                                <span class="stat-label">States</span>
+                            </div>
+                        </div>
+                        
+                        <div class="program-actions">
+                            <a href="#get-involved" class="btn">Get Involved</a>
+                            <a href="#impact" class="btn btn-outline">See Impact</a>
+                        </div>
+                    </div>
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Vocational training in progress">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program Features -->
+        <section class="section features-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Vocational Training Approach</h2>
+                    <p>Comprehensive skill development for employability and entrepreneurship</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h3>Industry-Relevant Skills</h3>
+                        <p>Our courses are designed in consultation with industry experts to ensure graduates have skills that employers actually need.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3>Job Placement Support</h3>
+                        <p>We provide placement assistance, resume building, and interview preparation to help graduates secure employment.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-seedling"></i>
+                        </div>
+                        <h3>Entrepreneurship Training</h3>
+                        <p>For those interested in starting businesses, we offer entrepreneurship development and micro-enterprise support.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>Women-Centric Courses</h3>
+                        <p>Special programs designed for women, focusing on skills that can be practiced from home or in flexible work environments.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Digital Literacy</h3>
+                        <p>All vocational courses include basic digital skills training to prepare students for the modern workplace.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Industry Partnerships</h3>
+                        <p>We collaborate with companies for internships, on-the-job training, and direct recruitment of our graduates.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Vocational Courses</h2>
+                    <p>Market-driven training programs across multiple sectors</p>
+                </div>
+                
+                <div class="courses-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="technical">Technical Skills</button>
+                        <button class="tab-btn" data-tab="services">Service Sector</button>
+                        <button class="tab-btn" data-tab="entrepreneurship">Entrepreneurship</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="technical">
+                        <div class="course-category">
+                            <h4><i class="fas fa-cogs"></i> Technical & Industrial Skills</h4>
+                            <p>Hands-on training in technical fields with high employment potential.</p>
+                            
+                            <div class="courses-grid">
+                                <div class="course-card">
+                                    <h5><i class="fas fa-bolt"></i> Electrical Work</h5>
+                                    <p>Domestic and industrial electrical installation, maintenance, and repair</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 3-6 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-toolbox"></i> Plumbing</h5>
+                                    <p>Water supply systems, sanitary fittings, and pipeline installation</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 2-4 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-hammer"></i> Carpentry</h5>
+                                    <p>Furniture making, woodworking, and construction carpentry</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 4-6 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-screwdriver"></i> Mechanic Training</h5>
+                                    <p>Automobile, motorcycle, and agricultural equipment repair</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 6-9 months
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="services">
+                        <div class="course-category">
+                            <h4><i class="fas fa-concierge-bell"></i> Service Sector Skills</h4>
+                            <p>Training for high-growth service industries and hospitality sector.</p>
+                            
+                            <div class="courses-grid">
+                                <div class="course-card">
+                                    <h5><i class="fas fa-utensils"></i> Food & Beverage</h5>
+                                    <p>Cooking, baking, bartending, and restaurant operations</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 3-6 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-spa"></i> Beauty & Wellness</h5>
+                                    <p>Hair styling, skincare, makeup artistry, and spa therapies</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 4-8 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-hotel"></i> Hospitality</h5>
+                                    <p>Front office operations, housekeeping, and guest services</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 3-5 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-user-tie"></i> Retail Management</h5>
+                                    <p>Customer service, inventory management, and sales techniques</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 2-4 months
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="entrepreneurship">
+                        <div class="course-category">
+                            <h4><i class="fas fa-chart-line"></i> Entrepreneurship & Digital Skills</h4>
+                            <p>Training for self-employment and small business development.</p>
+                            
+                            <div class="courses-grid">
+                                <div class="course-card">
+                                    <h5><i class="fas fa-laptop-code"></i> Digital Marketing</h5>
+                                    <p>Social media marketing, SEO, and online business promotion</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 3-5 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-mobile-alt"></i> Mobile Repair</h5>
+                                    <p>Smartphone hardware and software troubleshooting and repair</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 2-4 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-tshirt"></i> Tailoring & Fashion</h5>
+                                    <p>Garment construction, alteration, and fashion design basics</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 4-8 months
+                                    </div>
+                                </div>
+                                <div class="course-card">
+                                    <h5><i class="fas fa-store"></i> Small Business Management</h5>
+                                    <p>Business planning, finance management, and marketing strategies</p>
+                                    <div class="course-duration">
+                                        <i class="far fa-clock"></i> 2-3 months
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="section impact-section" id="impact">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Impact</h2>
+                    <p>Transforming lives through skill development</p>
+                </div>
+                
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="impact-number">84%</div>
+                        <p>Employment Rate</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="impact-number">3,200+</div>
+                        <p>Businesses Started</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <div class="impact-number">62%</div>
+                        <p>Women Graduates</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="impact-number">185%</div>
+                        <p>Income Increase</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Success Stories</h2>
+                    <p>Hear from our vocational training graduates</p>
+                </div>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-content">
+                            "I was working as a daily wage laborer with no stable income. After completing the electrician training program, I now have my own electrical services business and employ two other people. The skills I learned changed my life completely."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">RS</div>
+                            <div class="author-info">
+                                <h4>Rahul Sharma</h4>
+                                <p>Electrician, Business Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "As a woman from a conservative family, I never thought I could have my own business. The tailoring program gave me skills and confidence. I now run a successful boutique from my home and support my family financially."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">PD</div>
+                            <div class="author-info">
+                                <h4>Priya Desai</h4>
+                                <p>Tailor, Boutique Owner</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "The mobile repair course was exactly what I needed to start my career in the growing electronics industry. The placement cell helped me get a job at a reputable service center even before I completed my course."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">AK</div>
+                            <div class="author-info">
+                                <h4>Anil Kumar</h4>
+                                <p>Mobile Technician</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Involved -->
+        <section class="section features-section" id="get-involved">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Get Involved</h2>
+                    <p>Help us build skills and transform lives</p>
+                </div>
+                
+                <div class="involvement-options">
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h3>Sponsor a Student</h3>
+                        <p>Provide vocational training to one student for just ₹15,000 for a 6-month course.</p>
+                        <a href="donate.html" class="btn">Sponsor Now</a>
+                    </div>
+                    
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Become an Instructor</h3>
+                        <p>Share your expertise by teaching vocational skills to aspiring students.</p>
+                        <a href="contact.html" class="btn btn-outline">Volunteer</a>
+                    </div>
+                    
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Industry Partnership</h3>
+                        <p>Partner with us for internships, apprenticeships, or hiring our graduates.</p>
+                        <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Help Us Build Skills for Tomorrow</h2>
+                <p>Your support can provide vocational training to youth and adults, empowering them with skills for sustainable livelihoods and breaking the cycle of poverty.</p>
+                <a href="donate.html" class="btn">Donate Now</a>
+                <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ShikshaBank</h3>
+                    <p>ShikshaBank.org is a non-profit organization dedicated to providing quality education to underprivileged children across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Programs</h3>
+                    <ul>
+                        <li><a href="early-education.html">Early Childhood Education</a></li>
+                        <li><a href="girl-education.html">Girl Child Education</a></li>
+                        <li><a href="digital-learning.html">Digital Learning</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
+                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@shikshabank.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ShikshaBank.org. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Courses Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financials - ShikshaBank.org</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
+            --green: #27ae60;
+            --purple: #9b59b6;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 8px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link.active {
+            color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary);
+            border-left-color: var(--secondary);
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding-left: 20px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-cta {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown > .nav-link::after {
+                content: '\f078';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin-left: auto;
+                transition: var(--transition);
+            }
+            
+            .dropdown.active > .nav-link::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* ========== PAGE CONTENT STYLES ========== */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1411&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--light);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* ========== FINANCIAL HIGHLIGHTS ========== */
+        .financial-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .highlight-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--green));
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight-label {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* ========== FUND ALLOCATION ========== */
+        .allocation-section {
+            background-color: var(--light);
+        }
+
+        .allocation-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .allocation-chart {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .chart-container {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .chart-slice {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(0deg);
+        }
+
+        .slice-1 {
+            background-color: var(--secondary);
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(0deg);
+        }
+
+        .slice-2 {
+            background-color: var(--green);
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(72deg);
+        }
+
+        .slice-3 {
+            background-color: var(--purple);
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(144deg);
+        }
+
+        .slice-4 {
+            background-color: var(--accent);
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(216deg);
+        }
+
+        .slice-5 {
+            background-color: #f39c12;
+            clip-path: polygon(50% 50%, 50% 0%, 100% 0%, 100% 100%, 50% 100%);
+            transform: rotate(288deg);
+        }
+
+        .chart-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .legend-info {
+            flex: 1;
+        }
+
+        .legend-percentage {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ========== FINANCIAL STATEMENTS ========== */
+        .statements-tabs {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .financial-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .financial-table th, .financial-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .financial-table th {
+            background-color: var(--light);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .financial-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .amount {
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* ========== TRANSPARENCY SECTION ========== */
+        .transparency-section {
+            background-color: var(--light);
+        }
+
+        .transparency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .transparency-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .transparency-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .transparency-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .transparency-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* ========== DOWNLOADS SECTION ========== */
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .download-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .download-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .download-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .download-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1411&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ADJUSTMENTS ========== */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .allocation-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .chart-container {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .financial-highlights {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+            }
+            
+            .financial-table {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .financial-highlights {
+                grid-template-columns: 1fr;
+            }
+            
+            .transparency-grid, .downloads-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .chart-center {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation System -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Shiksha<span>Bank</span></div>
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> About Us</a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Our Story</a>
+                        <a href="mission.html">Mission & Vision</a>
+                        <a href="impact.html">Our Impact</a>
+                        <a href="financials.html">Financials</a>
+                    </div>
+                </li>
+                <li><a href="our-team.html" class="nav-link"><i class="fas fa-users"></i> Our Team</a></li>
+                <li class="dropdown">
+                    <a href="programs.html" class="nav-link"><i class="fas fa-project-diagram"></i> Programs</a>
+                    <div class="dropdown-content">
+                        <a href="early-education.html">Early Education</a>
+                        <a href="digital-learning.html">Digital Learning</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="vocational.html">Vocational Training</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Financial Transparency</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li>Financials</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Financial Highlights -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Financial Highlights</h2>
+                    <p>Our commitment to transparency and accountability in financial management</p>
+                </div>
+                
+                <div class="financial-highlights">
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <span class="highlight-number">₹42.7 Cr</span>
+                        <span class="highlight-label">Total Revenue (2022-23)</span>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <span class="highlight-number">86%</span>
+                        <span class="highlight-label">Program Expenses</span>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <span class="highlight-number">8%</span>
+                        <span class="highlight-label">Administrative Costs</span>
+                    </div>
+                    
+                    <div class="highlight-card">
+                        <div class="highlight-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <span class="highlight-number">6%</span>
+                        <span class="highlight-label">Fundraising Expenses</span>
+                    </div>
+                </div>
+                
+                <div class="section-title">
+                    <h2>Fund Allocation</h2>
+                    <p>How your donations are utilized to create maximum impact</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fund Allocation -->
+        <section class="section allocation-section">
+            <div class="container">
+                <div class="allocation-container">
+                    <div class="allocation-chart">
+                        <div class="chart-container">
+                            <div class="chart-slice slice-1"></div>
+                            <div class="chart-slice slice-2"></div>
+                            <div class="chart-slice slice-3"></div>
+                            <div class="chart-slice slice-4"></div>
+                            <div class="chart-slice slice-5"></div>
+                            <div class="chart-center">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary);">Fund</div>
+                                    <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary);">Allocation</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--secondary);"></div>
+                            <div class="legend-info">
+                                <strong>Direct Education Programs</strong>
+                                <div>Classroom instruction, learning materials, teacher salaries</div>
+                            </div>
+                            <div class="legend-percentage">52%</div>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--green);"></div>
+                            <div class="legend-info">
+                                <strong>Infrastructure & Facilities</strong>
+                                <div>School buildings, digital labs, furniture, maintenance</div>
+                            </div>
+                            <div class="legend-percentage">20%</div>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--purple);"></div>
+                            <div class="legend-info">
+                                <strong>Teacher Training</strong>
+                                <div>Professional development, workshops, certifications</div>
+                            </div>
+                            <div class="legend-percentage">14%</div>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: var(--accent);"></div>
+                            <div class="legend-info">
+                                <strong>Administrative Costs</strong>
+                                <div>Staff salaries, office expenses, utilities</div>
+                            </div>
+                            <div class="legend-percentage">8%</div>
+                        </div>
+                        
+                        <div class="legend-item">
+                            <div class="legend-color" style="background-color: #f39c12;"></div>
+                            <div class="legend-info">
+                                <strong>Fundraising</strong>
+                                <div>Campaigns, donor communication, events</div>
+                            </div>
+                            <div class="legend-percentage">6%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Statements -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Financial Statements</h2>
+                    <p>Detailed breakdown of our financial performance</p>
+                </div>
+                
+                <div class="statements-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="income">Income Statement</button>
+                        <button class="tab-btn" data-tab="balance">Balance Sheet</button>
+                        <button class="tab-btn" data-tab="cashflow">Cash Flow</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="income">
+                        <h3>Statement of Income & Expenditure (2022-23)</h3>
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>Particulars</th>
+                                    <th class="amount">Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>INCOME</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Individual Donations</td>
+                                    <td class="amount">18,52,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Corporate Partnerships</td>
+                                    <td class="amount">12,35,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Foundation Grants</td>
+                                    <td class="amount">8,45,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Government Funding</td>
+                                    <td class="amount">2,95,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Income</strong></td>
+                                    <td class="amount"><strong>42,27,00,000</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>EXPENDITURE</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Direct Education Programs</td>
+                                    <td class="amount">21,98,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Infrastructure & Facilities</td>
+                                    <td class="amount">8,45,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Teacher Training</td>
+                                    <td class="amount">5,92,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Administrative Costs</td>
+                                    <td class="amount">3,38,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Fundraising Expenses</td>
+                                    <td class="amount">2,54,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Expenditure</strong></td>
+                                    <td class="amount"><strong>42,27,00,000</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tab-content" id="balance">
+                        <h3>Balance Sheet as on 31st March 2023</h3>
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>Particulars</th>
+                                    <th class="amount">Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>ASSETS</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Fixed Assets</td>
+                                    <td class="amount">15,82,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Investments</td>
+                                    <td class="amount">8,45,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Cash & Bank Balances</td>
+                                    <td class="amount">12,38,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Receivables</td>
+                                    <td class="amount">3,25,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Assets</strong></td>
+                                    <td class="amount"><strong>39,90,00,000</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LIABILITIES</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Reserves & Funds</td>
+                                    <td class="amount">35,45,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Payables</td>
+                                    <td class="amount">4,45,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Total Liabilities</strong></td>
+                                    <td class="amount"><strong>39,90,00,000</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tab-content" id="cashflow">
+                        <h3>Cash Flow Statement (2022-23)</h3>
+                        <table class="financial-table">
+                            <thead>
+                                <tr>
+                                    <th>Particulars</th>
+                                    <th class="amount">Amount (₹)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Cash from Operating Activities</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Donations Received</td>
+                                    <td class="amount">39,82,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td>Program Expenses</td>
+                                    <td class="amount">(36,35,00,000)</td>
+                                </tr>
+                                <tr>
+                                    <td>Administrative Expenses</td>
+                                    <td class="amount">(3,38,00,000)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Net Cash from Operations</strong></td>
+                                    <td class="amount"><strong>9,00,000</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cash from Investing Activities</strong></td>
+                                    <td class="amount"></td>
+                                </tr>
+                                <tr>
+                                    <td>Purchase of Fixed Assets</td>
+                                    <td class="amount">(4,25,00,000)</td>
+                                </tr>
+                                <tr>
+                                    <td>Investment Income</td>
+                                    <td class="amount">65,00,000</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Net Cash from Investing</strong></td>
+                                    <td class="amount"><strong>(3,60,00,000)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Net Increase in Cash</strong></td>
+                                    <td class="amount"><strong>(3,51,00,000)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transparency Commitment -->
+        <section class="section transparency-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Commitment to Transparency</h2>
+                    <p>We believe in complete financial transparency to build trust with our donors and stakeholders</p>
+                </div>
+                
+                <div class="transparency-grid">
+                    <div class="transparency-card">
+                        <div class="transparency-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <h3>Certified Audits</h3>
+                        <p>Our financial statements are annually audited by independent chartered accountants to ensure accuracy and compliance.</p>
+                    </div>
+                    
+                    <div class="transparency-card">
+                        <div class="transparency-icon">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <h3>Regulatory Compliance</h3>
+                        <p>We fully comply with all FCRA regulations and maintain 80G and 12A certifications for tax exemption.</p>
+                    </div>
+                    
+                    <div class="transparency-card">
+                        <div class="transparency-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Impact Measurement</h3>
+                        <p>We regularly measure and report the impact of every rupee spent to ensure maximum educational outcomes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Downloads Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Financial Documents</h2>
+                    <p>Access our complete financial reports and documents</p>
+                </div>
+                
+                <div class="downloads-grid">
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <h3>Annual Report 2022-23</h3>
+                        <p>Complete annual report including financial statements, impact assessment, and future plans.</p>
+                        <a href="#" class="btn">Download PDF</a>
+                    </div>
+                    
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-balance-scale"></i>
+                        </div>
+                        <h3>Audit Report</h3>
+                        <p>Independent auditor's report for the financial year 2022-23.</p>
+                        <a href="#" class="btn">Download PDF</a>
+                    </div>
+                    
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                        <h3>FCRA Returns</h3>
+                        <p>Foreign Contribution Regulation Act returns filed with the Ministry of Home Affairs.</p>
+                        <a href="#" class="btn">Download PDF</a>
+                    </div>
+                    
+                    <div class="download-card">
+                        <div class="download-icon">
+                            <i class="fas fa-certificate"></i>
+                        </div>
+                        <h3>Tax Exemption Certificates</h3>
+                        <p>80G and 12A certificates for tax exemption on donations.</p>
+                        <a href="#" class="btn">View Certificates</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Support Transparent Education</h2>
+                <p>Your donation goes directly to educational programs with complete financial transparency and accountability.</p>
+                <a href="donate.html" class="btn">Donate Now</a>
+                <a href="contact.html" class="btn btn-outline">Ask Questions</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ShikshaBank</h3>
+                    <p>ShikshaBank.org is a non-profit organization dedicated to providing quality education to underprivileged children across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Programs</h3>
+                    <ul>
+                        <li><a href="early-education.html">Early Childhood Education</a></li>
+                        <li><a href="girl-education.html">Girl Child Education</a></li>
+                        <li><a href="digital-learning.html">Digital Learning</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
+                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@shikshabank.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ShikshaBank.org. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Financial Statements Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

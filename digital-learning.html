@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Learning - ShikshaBank.org</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 8px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link.active {
+            color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary);
+            border-left-color: var(--secondary);
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding-left: 20px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-cta {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown > .nav-link::after {
+                content: '\f078';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin-left: auto;
+                transition: var(--transition);
+            }
+            
+            .dropdown.active > .nav-link::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* ========== PAGE CONTENT STYLES ========== */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--light);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* ========== PROGRAM HERO ========== */
+        .program-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .program-intro h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .program-intro p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .program-stats {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .program-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .program-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .program-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .program-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* ========== PROGRAM FEATURES ========== */
+        .features-section {
+            background-color: var(--light);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* ========== CURRICULUM SECTION ========== */
+        .curriculum-tabs {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .age-group {
+            margin-bottom: 2rem;
+        }
+
+        .age-group h4 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .learning-areas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .learning-area {
+            background-color: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+        }
+
+        .learning-area h5 {
+            margin-bottom: 0.8rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ========== IMPACT SECTION ========== */
+        .impact-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .impact-card {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .impact-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
+
+        /* ========== SUCCESS STORIES ========== */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .story-content::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: var(--light);
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            line-height: 1;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ========== GET INVOLVED ========== */
+        .involvement-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .involvement-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .involvement-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .involvement-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .involvement-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .involvement-card p {
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ADJUSTMENTS ========== */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .program-hero {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .program-image {
+                order: -1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .program-stats {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .features-grid, .stories-grid, .involvement-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation System -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Shiksha<span>Bank</span></div>
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link"><i class="fas fa-info-circle"></i> About Us</a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Our Story</a>
+                        <a href="mission.html">Mission & Vision</a>
+                        <a href="impact.html">Our Impact</a>
+                        <a href="financials.html">Financials</a>
+                    </div>
+                </li>
+                <li><a href="our-team.html" class="nav-link"><i class="fas fa-users"></i> Our Team</a></li>
+                <li class="dropdown">
+                    <a href="programs.html" class="nav-link active"><i class="fas fa-project-diagram"></i> Programs</a>
+                    <div class="dropdown-content">
+                        <a href="early-education.html">Early Education</a>
+                        <a href="digital-learning.html">Digital Learning</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="vocational.html">Vocational Training</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Digital Learning</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="programs.html">Programs</a></li>
+                    <li>Digital Learning</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Program Hero -->
+        <section class="section">
+            <div class="container">
+                <div class="program-hero">
+                    <div class="program-intro">
+                        <h2>Bridging the Digital Divide in Education</h2>
+                        <p>Our Digital Learning program provides students in underserved communities with access to technology, digital literacy skills, and online educational resources to prepare them for the 21st-century workforce.</p>
+                        <p>We believe that digital literacy is no longer a luxury but a fundamental skill for success in today's world. Our program equips students with the tools and knowledge they need to thrive in an increasingly digital society.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="stat-number">15,000+</span>
+                                <span class="stat-label">Students Reached</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="stat-number">250</span>
+                                <span class="stat-label">Digital Labs</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="stat-number">18</span>
+                                <span class="stat-label">States</span>
+                            </div>
+                        </div>
+                        
+                        <div class="program-actions">
+                            <a href="#get-involved" class="btn">Get Involved</a>
+                            <a href="#impact" class="btn btn-outline">See Impact</a>
+                        </div>
+                    </div>
+                    <div class="program-image">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Students using digital devices for learning">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program Features -->
+        <section class="section features-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Digital Learning Approach</h2>
+                    <p>Comprehensive technology integration for modern education</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3>Digital Infrastructure</h3>
+                        <p>We establish computer labs with internet connectivity and provide tablets to students, creating the foundation for digital learning in underserved schools.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-book-reader"></i>
+                        </div>
+                        <h3>Digital Content</h3>
+                        <p>We develop and curate interactive digital learning materials aligned with school curricula to make learning engaging and effective.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Teacher Training</h3>
+                        <p>We equip teachers with the skills to effectively integrate technology into their teaching practices and create blended learning environments.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>Coding & STEM</h3>
+                        <p>We introduce students to coding, robotics, and STEM concepts to develop critical thinking and problem-solving skills for future careers.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Digital Safety</h3>
+                        <p>We teach students about online safety, digital citizenship, and responsible use of technology to navigate the digital world securely.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3>Global Connectivity</h3>
+                        <p>We connect students with peers and experts worldwide, expanding their horizons and fostering global awareness and collaboration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Digital Curriculum</h2>
+                    <p>Age-appropriate digital skills development for all grade levels</p>
+                </div>
+                
+                <div class="curriculum-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="primary">Primary Grades</button>
+                        <button class="tab-btn" data-tab="middle">Middle School</button>
+                        <button class="tab-btn" data-tab="high">High School</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="primary">
+                        <div class="age-group">
+                            <h4><i class="fas fa-child"></i> Grades 1-5</h4>
+                            <p>Introduction to digital devices and basic computer skills through interactive and game-based learning.</p>
+                            
+                            <div class="learning-areas">
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-mouse"></i> Basic Computer Skills</h5>
+                                    <p>Introduction to computers, keyboarding, mouse skills, and basic device operations</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-paint-brush"></i> Digital Creativity</h5>
+                                    <p>Simple graphic design, digital art, and creative expression using age-appropriate tools</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-gamepad"></i> Educational Games</h5>
+                                    <p>Learning through educational games that develop logic, math, and language skills</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-search"></i> Internet Basics</h5>
+                                    <p>Safe browsing, basic online research, and understanding digital information</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="middle">
+                        <div class="age-group">
+                            <h4><i class="fas fa-user-graduate"></i> Grades 6-8</h4>
+                            <p>Developing digital literacy skills and introducing coding concepts through project-based learning.</p>
+                            
+                            <div class="learning-areas">
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-keyboard"></i> Digital Productivity</h5>
+                                    <p>Word processing, presentations, spreadsheets, and digital communication tools</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-code"></i> Introduction to Coding</h5>
+                                    <p>Block-based programming, computational thinking, and simple app development</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-video"></i> Digital Media</h5>
+                                    <p>Basic video editing, digital storytelling, and multimedia presentation skills</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-user-shield"></i> Digital Citizenship</h5>
+                                    <p>Online safety, privacy, cyberbullying prevention, and responsible digital behavior</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="high">
+                        <div class="age-group">
+                            <h4><i class="fas fa-graduation-cap"></i> Grades 9-12</h4>
+                            <p>Advanced digital skills development with focus on career readiness and specialized technologies.</p>
+                            
+                            <div class="learning-areas">
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-laptop-code"></i> Advanced Programming</h5>
+                                    <p>Text-based coding, web development, app creation, and software development principles</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-chart-line"></i> Data Analytics</h5>
+                                    <p>Data visualization, spreadsheet analysis, and interpreting digital information</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-robot"></i> Emerging Technologies</h5>
+                                    <p>AI basics, robotics, IoT, and understanding future technology trends</p>
+                                </div>
+                                <div class="learning-area">
+                                    <h5><i class="fas fa-briefcase"></i> Digital Career Skills</h5>
+                                    <p>Digital portfolios, online professional presence, and workplace technology skills</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Section -->
+        <section class="section impact-section" id="impact">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Digital Impact</h2>
+                    <p>Transforming education through technology integration</p>
+                </div>
+                
+                <div class="impact-grid">
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <div class="impact-number">78%</div>
+                        <p>Improved Digital Literacy</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="impact-number">42%</div>
+                        <p>Higher Academic Performance</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <div class="impact-number">65%</div>
+                        <p>Girls in STEM Programs</p>
+                    </div>
+                    
+                    <div class="impact-card">
+                        <div class="impact-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="impact-number">15</div>
+                        <p>National Awards</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Digital Success Stories</h2>
+                    <p>Hear from students and educators transformed by digital learning</p>
+                </div>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-content">
+                            "Before the digital lab came to our school, I had never touched a computer. Now I can code simple games and help my family with online tasks. The digital skills I've learned have opened up a world of opportunities I never knew existed."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">RK</div>
+                            <div class="author-info">
+                                <h4>Rahul Kumar</h4>
+                                <p>Grade 10 Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "As a teacher in a rural school, I struggled to make abstract concepts tangible for my students. With the tablets and digital content provided by ShikshaBank, I can now show 3D models, virtual experiments, and interactive lessons that make learning come alive."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">AP</div>
+                            <div class="author-info">
+                                <h4>Anita Patel</h4>
+                                <p>Science Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "The coding club started by ShikshaBank ignited a passion for technology in our daughter. She went from being a shy student to confidently presenting her app idea at a national competition. This program is not just teaching skills; it's building futures."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">SG</div>
+                            <div class="author-info">
+                                <h4>Sunil Gupta</h4>
+                                <p>Parent</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Involved -->
+        <section class="section features-section" id="get-involved">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Get Involved</h2>
+                    <p>Help us bridge the digital divide in education</p>
+                </div>
+                
+                <div class="involvement-options">
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3>Donate Devices</h3>
+                        <p>Provide tablets, computers, or other digital devices to equip a digital learning lab for underserved students.</p>
+                        <a href="donate.html" class="btn">Donate Now</a>
+                    </div>
+                    
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>Tech Mentorship</h3>
+                        <p>Share your technology expertise by mentoring students or training teachers in digital skills.</p>
+                        <a href="contact.html" class="btn btn-outline">Volunteer</a>
+                    </div>
+                    
+                    <div class="involvement-card">
+                        <div class="involvement-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3>Connect a School</h3>
+                        <p>Sponsor internet connectivity for a school or help establish a new digital learning center.</p>
+                        <a href="contact.html" class="btn btn-outline">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Help Us Bridge the Digital Divide</h2>
+                <p>Your support can provide digital access and skills to students who need it most, preparing them for success in the digital age.</p>
+                <a href="donate.html" class="btn">Donate Now</a>
+                <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ShikshaBank</h3>
+                    <p>ShikshaBank.org is a non-profit organization dedicated to providing quality education to underprivileged children across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Programs</h3>
+                    <ul>
+                        <li><a href="early-education.html">Early Childhood Education</a></li>
+                        <li><a href="girl-education.html">Girl Child Education</a></li>
+                        <li><a href="digital-learning.html">Digital Learning</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
+                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@shikshabank.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ShikshaBank.org. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Curriculum Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
