@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Impact - ShikshaBank.org</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --text: #333;
+            --text-light: #7f8c8d;
+            --transition: all 0.3s ease;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 8px;
+            --green: #27ae60;
+            --purple: #9b59b6;
+            --orange: #e67e22;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: #f9f9f9;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .nav-container {
+            padding: 8px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            z-index: 1001;
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo-text span {
+            color: var(--secondary);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            padding: 8px 0;
+            position: relative;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 1rem;
+        }
+
+        .nav-link:hover {
+            color: var(--secondary);
+        }
+
+        .nav-link.active {
+            color: var(--secondary);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .nav-cta {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .nav-cta:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            color: white;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: var(--transition);
+            z-index: 1001;
+            padding: 10px 0;
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text);
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f8f9fa;
+            color: var(--secondary);
+            border-left-color: var(--secondary);
+        }
+
+        /* Mobile Menu Toggle */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            width: 30px;
+            height: 21px;
+            justify-content: space-between;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 992px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                padding: 15px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .dropdown-content {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                padding-left: 20px;
+                display: none;
+                width: 100%;
+            }
+
+            .dropdown.active .dropdown-content {
+                display: block;
+            }
+
+            .nav-cta {
+                margin-top: 20px;
+                width: 100%;
+                text-align: center;
+            }
+            
+            .dropdown > .nav-link::after {
+                content: '\f078';
+                font-family: 'Font Awesome 5 Free';
+                font-weight: 900;
+                margin-left: auto;
+                transition: var(--transition);
+            }
+            
+            .dropdown.active > .nav-link::after {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* ========== PAGE CONTENT STYLES ========== */
+        .page-content {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .breadcrumb a:hover {
+            color: var(--secondary);
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 0.5rem;
+            color: var(--light);
+        }
+
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+        }
+
+        /* ========== IMPACT HERO ========== */
+        .impact-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .impact-intro h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .impact-intro p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .impact-image {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .impact-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .impact-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ========== KEY METRICS ========== */
+        .metrics-section {
+            background-color: var(--light);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .metric-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--secondary), var(--green));
+        }
+
+        .metric-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        /* ========== PROGRAM IMPACT ========== */
+        .program-impact-tabs {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background-color: white;
+            border: 2px solid var(--light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .tab-btn:hover, .tab-btn.active {
+            background-color: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .program-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .program-stat {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: var(--light);
+            border-radius: var(--radius);
+        }
+
+        .program-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .program-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .impact-story {
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: var(--radius);
+            border-left: 4px solid var(--secondary);
+        }
+
+        /* ========== GEOGRAPHICAL REACH ========== */
+        .reach-section {
+            background-color: var(--light);
+        }
+
+        .reach-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .reach-map {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .map-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .reach-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .reach-stat {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .reach-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .reach-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* ========== SUCCESS STORIES ========== */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .story-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .story-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            position: relative;
+        }
+
+        .story-content::before {
+            content: '\201C';
+            font-size: 4rem;
+            color: var(--light);
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            line-height: 1;
+        }
+
+        .story-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* ========== IMPACT TIMELINE ========== */
+        .timeline-section {
+            background-color: var(--light);
+        }
+
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background-color: var(--secondary);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-content {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            width: 45%;
+            transition: var(--transition);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .timeline-marker {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--secondary);
+            border-radius: 50%;
+            border: 4px solid white;
+            z-index: 1;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .timeline-year {
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ========== PARTNERS SECTION ========== */
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .partner-logo {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 120px;
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+        }
+
+        .partner-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* ========== CTA SECTION ========== */
+        .cta-section {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1532629345422-7515f3d16bb6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* ========== RESPONSIVE ADJUSTMENTS ========== */
+        @media (max-width: 992px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .impact-hero {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .reach-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                flex-direction: row !important;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px;
+            }
+            
+            .timeline-marker {
+                left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 280px;
+                height: 100vh;
+                background-color: white;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                padding: 100px 2rem 2rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                overflow-y: auto;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .cta-section h2 {
+                font-size: 2.2rem;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .tab-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-text {
+                font-size: 1.2rem;
+            }
+            
+            .section {
+                padding: 3rem 0;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stories-grid, .partners-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation System -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap logo-icon"></i>
+                <div class="logo-text">Shiksha<span>Bank</span></div>
+            </a>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li class="dropdown">
+                    <a href="about.html" class="nav-link active"><i class="fas fa-info-circle"></i> About Us</a>
+                    <div class="dropdown-content">
+                        <a href="about.html">Our Story</a>
+                        <a href="mission.html">Mission & Vision</a>
+                        <a href="impact.html">Our Impact</a>
+                        <a href="financials.html">Financials</a>
+                    </div>
+                </li>
+                <li><a href="our-team.html" class="nav-link"><i class="fas fa-users"></i> Our Team</a></li>
+                <li class="dropdown">
+                    <a href="programs.html" class="nav-link"><i class="fas fa-project-diagram"></i> Programs</a>
+                    <div class="dropdown-content">
+                        <a href="early-education.html">Early Education</a>
+                        <a href="digital-learning.html">Digital Learning</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="vocational.html">Vocational Training</a>
+                    </div>
+                </li>
+                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Page Content -->
+    <main class="page-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1>Our Impact</h1>
+                <ul class="breadcrumb">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li>Our Impact</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Impact Hero -->
+        <section class="section">
+            <div class="container">
+                <div class="impact-hero">
+                    <div class="impact-intro">
+                        <h2>Transforming Lives Through Education</h2>
+                        <p>Since our inception, ShikshaBank has been committed to creating measurable, sustainable impact in the lives of underprivileged children across India. Our evidence-based approach ensures that every intervention creates lasting change.</p>
+                        <p>We believe in transparency and accountability, which is why we rigorously measure our outcomes and share our results with our supporters. Here's how your support is making a difference.</p>
+                        
+                        <div class="program-actions">
+                            <a href="#metrics" class="btn">See Our Metrics</a>
+                            <a href="#stories" class="btn btn-outline">Read Success Stories</a>
+                        </div>
+                    </div>
+                    <div class="impact-image">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Children learning in classroom">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Metrics -->
+        <section class="section metrics-section" id="metrics">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Impact in Numbers</h2>
+                    <p>Measurable outcomes that demonstrate our commitment to educational transformation</p>
+                </div>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <span class="metric-number">75,000+</span>
+                        <span class="metric-label">Children Educated</span>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <span class="metric-number">650+</span>
+                        <span class="metric-label">Learning Centers</span>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <span class="metric-number">3,200+</span>
+                        <span class="metric-label">Teachers Trained</span>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <span class="metric-number">58%</span>
+                        <span class="metric-label">Girl Students</span>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <span class="metric-number">25,000+</span>
+                        <span class="metric-label">Digital Learners</span>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-hand-holding-usd"></i>
+                        </div>
+                        <span class="metric-number">18,000+</span>
+                        <span class="metric-label">Vocational Graduates</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Program Impact -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Program-Specific Impact</h2>
+                    <p>Detailed outcomes across our key program areas</p>
+                </div>
+                
+                <div class="program-impact-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="early-edu">Early Education</button>
+                        <button class="tab-btn" data-tab="digital">Digital Learning</button>
+                        <button class="tab-btn" data-tab="girl-edu">Girl Education</button>
+                        <button class="tab-btn" data-tab="vocational">Vocational Training</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="early-edu">
+                        <h3>Early Childhood Education Impact</h3>
+                        <p>Our early education program focuses on building strong foundations for children aged 3-6 years, preparing them for formal schooling and lifelong learning.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="program-stat-number">92%</span>
+                                <span class="program-stat-label">School Readiness</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">15,200+</span>
+                                <span class="program-stat-label">Children Reached</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">85%</span>
+                                <span class="program-stat-label">Parent Engagement</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">98%</span>
+                                <span class="program-stat-label">Health Improvement</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-story">
+                            <h4>Success Story: Anaya's Journey</h4>
+                            <p>Anaya joined our early education program as a shy 4-year-old with limited exposure to structured learning. Within a year, she developed confidence, curiosity, and foundational literacy skills. Today, she's excelling in her primary school and dreams of becoming a teacher.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="digital">
+                        <h3>Digital Learning Impact</h3>
+                        <p>Our digital learning initiatives bridge the technology gap and prepare students for the 21st-century workforce.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="program-stat-number">78%</span>
+                                <span class="program-stat-label">Digital Literacy</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">25,000+</span>
+                                <span class="program-stat-label">Students Reached</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">42%</span>
+                                <span class="program-stat-label">Academic Improvement</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">65%</span>
+                                <span class="program-stat-label">Girls in STEM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-story">
+                            <h4>Success Story: Rahul's Transformation</h4>
+                            <p>Rahul, from a remote village, had never used a computer before joining our digital learning program. Today, he codes simple applications and helps his community with digital tasks. He's now pursuing a degree in computer science.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="girl-edu">
+                        <h3>Girl Education Impact</h3>
+                        <p>Our girl education program focuses on removing barriers and empowering girls through quality education.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="program-stat-number">85%</span>
+                                <span class="program-stat-label">School Completion</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">12,500+</span>
+                                <span class="program-stat-label">Girls Educated</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">67%</span>
+                                <span class="program-stat-label">Higher Education</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">42%</span>
+                                <span class="program-stat-label">In STEM Fields</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-story">
+                            <h4>Success Story: Priya's Empowerment</h4>
+                            <p>Priya was supposed to be married at 16, but our scholarship program enabled her to continue her education. She became the first engineer from her village and now mentors other girls in her community.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="vocational">
+                        <h3>Vocational Training Impact</h3>
+                        <p>Our vocational programs equip youth and adults with market-relevant skills for sustainable livelihoods.</p>
+                        
+                        <div class="program-stats">
+                            <div class="program-stat">
+                                <span class="program-stat-number">84%</span>
+                                <span class="program-stat-label">Employment Rate</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">18,000+</span>
+                                <span class="program-stat-label">Trained</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">3,200+</span>
+                                <span class="program-stat-label">Businesses Started</span>
+                            </div>
+                            <div class="program-stat">
+                                <span class="program-stat-number">185%</span>
+                                <span class="program-stat-label">Income Increase</span>
+                            </div>
+                        </div>
+                        
+                        <div class="impact-story">
+                            <h4>Success Story: Ramesh's Enterprise</h4>
+                            <p>Ramesh, a former daily wage laborer, completed our electrician training program. He now runs his own electrical services business, employs two people, and has transformed his family's economic situation.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Geographical Reach -->
+        <section class="section reach-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Geographical Reach</h2>
+                    <p>Expanding our impact across India, one community at a time</p>
+                </div>
+                
+                <div class="reach-container">
+                    <div class="reach-map">
+                        <div class="map-placeholder">
+                            India Impact Map<br>
+                            <small>25 States Reached</small>
+                        </div>
+                    </div>
+                    
+                    <div class="reach-stats">
+                        <div class="reach-stat">
+                            <div class="reach-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="reach-info">
+                                <h3>25 States</h3>
+                                <p>Active programs across 25 Indian states</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reach-stat">
+                            <div class="reach-icon">
+                                <i class="fas fa-village"></i>
+                            </div>
+                            <div class="reach-info">
+                                <h3>1,200+ Villages</h3>
+                                <p>Reaching remote and underserved communities</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reach-stat">
+                            <div class="reach-icon">
+                                <i class="fas fa-city"></i>
+                            </div>
+                            <div class="reach-info">
+                                <h3>85 Urban Centers</h3>
+                                <p>Working in urban slums and marginalized areas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="reach-stat">
+                            <div class="reach-icon">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <div class="reach-info">
+                                <h3>Tribal Communities</h3>
+                                <p>Special focus on tribal and indigenous populations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="section" id="stories">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Success Stories</h2>
+                    <p>Real stories of transformation from our students and communities</p>
+                </div>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-content">
+                            "I was the first girl in my family to complete high school, thanks to ShikshaBank's scholarship program. Today, I'm studying medicine and hope to return to my village as a doctor to serve my community."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">AS</div>
+                            <div class="author-info">
+                                <h4>Anjali Singh</h4>
+                                <p>Medical Student</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "The vocational training in mobile repair gave me skills I never thought I could learn. I now have my own repair shop and train other youth from my community. Education truly transforms lives."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">AK</div>
+                            <div class="author-info">
+                                <h4>Anil Kumar</h4>
+                                <p>Mobile Repair Entrepreneur</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="story-card">
+                        <div class="story-content">
+                            "As a teacher in a ShikshaBank school, I've seen firsthand how quality education changes children's lives. The training and resources provided have made me a better educator and my students are thriving."
+                        </div>
+                        <div class="story-author">
+                            <div class="author-avatar">SP</div>
+                            <div class="author-info">
+                                <h4>Sunita Patel</h4>
+                                <p>Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Timeline -->
+        <section class="section timeline-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Journey of Impact</h2>
+                    <p>Key milestones in our mission to transform education in India</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2010</div>
+                            <h3><i class="fas fa-seedling"></i> Foundation</h3>
+                            <p>ShikshaBank was established with a mission to provide quality education to underprivileged children. Started with 3 learning centers reaching 150 children.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2013</div>
+                            <h3><i class="fas fa-expand-arrows-alt"></i> Expansion</h3>
+                            <p>Expanded to 5 states, reaching 5,000 children. Launched our first vocational training program for youth.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2016</div>
+                            <h3><i class="fas fa-female"></i> Girl Education Focus</h3>
+                            <p>Launched dedicated girl education program with scholarships and mentorship. Reached 10,000+ students across India.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2019</div>
+                            <h3><i class="fas fa-laptop"></i> Digital Initiative</h3>
+                            <p>Introduced digital learning labs and coding programs. Reached milestone of 50,000 children educated since inception.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023</div>
+                            <h3><i class="fas fa-award"></i> National Recognition</h3>
+                            <p>Received national education award. Reached 75,000+ children across 25 states with comprehensive education programs.</p>
+                        </div>
+                        <div class="timeline-marker"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partners Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Our Partners in Impact</h2>
+                    <p>Collaborating with organizations and corporations to amplify our reach</p>
+                </div>
+                
+                <div class="partners-grid">
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">TechEd Foundation</div>
+                    </div>
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Global Giving</div>
+                    </div>
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">EduCare Trust</div>
+                    </div>
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Future Leaders</div>
+                    </div>
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Skill India</div>
+                    </div>
+                    <div class="partner-logo">
+                        <div style="color: var(--secondary); font-weight: 700; font-size: 1.2rem;">Women Empower</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <h2>Join Us in Creating More Impact</h2>
+                <p>Your support can help us reach more children and create more success stories like these.</p>
+                <a href="donate.html" class="btn">Donate Now</a>
+                <a href="contact.html" class="btn btn-outline">Partner With Us</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>About ShikshaBank</h3>
+                    <p>ShikshaBank.org is a non-profit organization dedicated to providing quality education to underprivileged children across India.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="our-team.html">Our Team</a></li>
+                        <li><a href="donate.html">Donate</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Our Programs</h3>
+                    <ul>
+                        <li><a href="early-education.html">Early Childhood Education</a></li>
+                        <li><a href="girl-education.html">Girl Child Education</a></li>
+                        <li><a href="digital-learning.html">Digital Learning</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
+                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Contact Info</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Education Street, Learning City, India</li>
+                        <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope"></i> info@shikshabank.org</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 ShikshaBank.org. All Rights Reserved. | Designed with <i class="fas fa-heart" style="color: var(--accent);"></i> for Education</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const overlay = document.getElementById('overlay');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Close menu when clicking on overlay
+        overlay.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Dropdown functionality for mobile
+        document.querySelectorAll('.dropdown > .nav-link').forEach(dropdown => {
+            dropdown.addEventListener('click', function(e) {
+                if (window.innerWidth <= 992) {
+                    e.preventDefault();
+                    this.parentElement.classList.toggle('active');
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close dropdown when clicking outside (desktop)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth > 992 && !e.target.matches('.dropdown > .nav-link')) {
+                document.querySelectorAll('.dropdown').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
+
+        // Program Impact Tab Functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
