@@ -29,6 +29,7 @@
 
         html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         body {
@@ -36,12 +37,15 @@
             color: var(--text);
             background-color: #f9f9f9;
             overflow-x: hidden;
+            width: 100%;
+            position: relative;
         }
 
         .container {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
+            overflow: hidden;
         }
 
         /* ========== RESPONSIVE NAVIGATION SYSTEM ========== */
@@ -245,6 +249,7 @@
                 transition: var(--transition);
                 box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
                 overflow-y: auto;
+                z-index: 1000;
             }
 
             .nav-menu.active {
@@ -267,10 +272,14 @@
                 padding-left: 20px;
                 display: none;
                 width: 100%;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
             }
 
             .dropdown.active .dropdown-content {
                 display: block;
+                max-height: 500px;
             }
 
             .nav-cta {
@@ -289,6 +298,12 @@
             
             .dropdown.active > .nav-link::after {
                 transform: rotate(180deg);
+            }
+            
+            /* Fix for dropdown links on mobile */
+            .dropdown-content a {
+                padding: 12px 0;
+                border-bottom: none;
             }
         }
 
@@ -394,7 +409,7 @@
         }
 
         .team-img {
-            height: 280px;
+            height: 380px;
             background-size: cover;
             background-position: center;
             position: relative;
@@ -724,6 +739,7 @@
                 transition: var(--transition);
                 box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
                 overflow-y: auto;
+                z-index: 1000;
             }
 
             .nav-menu.active {
@@ -745,6 +761,25 @@
             .team-grid, .advisory-grid {
                 grid-template-columns: 1fr;
             }
+            
+            /* Prevent horizontal scrolling on mobile */
+            body, html {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            .container {
+                width: 95%;
+            }
+            
+            img, video, iframe {
+                max-width: 100%;
+                height: auto;
+            }
+            
+            .team-img {
+                height: 300px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -758,6 +793,14 @@
             
             .volunteer-stats {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .page-header {
+                padding: 4rem 0 2rem;
+            }
+            
+            .team-img {
+                height: 250px;
             }
         }
 
@@ -786,6 +829,10 @@
             display: block;
         }
         
+        /* Fix for horizontal scrolling */
+        .no-scroll {
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -818,13 +865,14 @@
                 <li class="dropdown">
                     <a href="programs.html" class="nav-link"><i class="fas fa-project-diagram"></i> Programs</a>
                     <div class="dropdown-content">
-                        <a href="early-education.html">Free Educational Books for All</a>
-                        <a href="digital-learning.html">Free Education for All</a>
-                        <a href="girl-education.html">Free Plantation</a>
+                        <a href="free-educational-books-for-all.html">Free Educational Books for All</a>
+                        <a href="free-education-for-all.html">Free Education for All</a>
+                        <a href="girl-education.html">Girl Education</a>
+                        <a href="free-plantation.html">Free Plantation</a>
                         <a href="vocational.html">Vocational Training</a>
                     </div>
                 </li>
-                <li><a href="donate.html" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
+                <li><a href="https://razorpay.me/@shikshabank" class="nav-link nav-cta"><i class="fas fa-hand-holding-heart"></i> Donate Now</a></li>
                 <li><a href="contact.html" class="nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
             </ul>
         </div>
@@ -856,9 +904,9 @@
                 
                 <div class="team-grid">
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                        <div class="team-img" style="background-image: url('img/head4.jpg');">
                             <div class="team-overlay">
-                                <h3>Dr. Anjali Sharma</h3>
+                                <h3>Gaurav Jain</h3>
                                 <span>Founder & CEO</span>
                             </div>
                         </div>
@@ -873,7 +921,7 @@
                     </div>
                     
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                        <div class="team-img" style="background-image: url('img/head.jpeg');">
                             <div class="team-overlay">
                                 <h3>Rajesh Kumar</h3>
                                 <span>Operations Director</span>
@@ -890,7 +938,7 @@
                     </div>
                     
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80');">
+                        <div class="team-img" style="background-image: url('img/head2.jpeg');">
                             <div class="team-overlay">
                                 <h3>Priya Patel</h3>
                                 <span>Program Director</span>
@@ -919,7 +967,7 @@
                 
                 <div class="team-grid">
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                        <div class="team-img" style="background-image: url('img/head4.jpg');">
                             <div class="team-overlay">
                                 <h3>Arun Mehta</h3>
                                 <span>Digital Learning Manager</span>
@@ -936,7 +984,7 @@
                     </div>
                     
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1494790108755-2616c113a1c1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80');">
+                        <div class="team-img" style="background-image: url('img/head.jpeg');">
                             <div class="team-overlay">
                                 <h3>Sunita Reddy</h3>
                                 <span>Girl Education Coordinator</span>
@@ -953,7 +1001,7 @@
                     </div>
                     
                     <div class="team-card">
-                        <div class="team-img" style="background-image: url('https://images.unsplash.com/photo-1507591064344-4c6ce005b128?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');">
+                        <div class="team-img" style="background-image: url('img/head3.jpeg');">
                             <div class="team-overlay">
                                 <h3>Vikram Singh</h3>
                                 <span>Vocational Training Head</span>
@@ -1023,7 +1071,7 @@
                     </div>
                     
                     <div class="stat-card">
-                        <div class="stat-number">18</div>
+                        <div class="stat-number">28</div>
                         <p>States Covered</p>
                     </div>
                     
@@ -1087,11 +1135,11 @@
                 <div class="footer-col">
                     <h3>Our Programs</h3>
                     <ul>
-                        <li><a href="early-education.html">Free Educational Books for All</a></li>
-                        <li><a href="girl-education.html">Free Education for All</a></li>
-                        <li><a href="digital-learning.html">Free Plantation</a></li>
-                        <li><a href="vocational.html">RRR- Receive Recycle Reuse</a></li>
-                        <li><a href="teacher-training.html">Teacher Development</a></li>
+                        <li><a href="free-educational-books-for-all.html">Free Educational Books for All</a></li>
+                        <li><a href="free-education-for-all.html">Free Education for All</a></li>
+                        <li><a href="girl-education.html">Girl Education</a></li>
+                        <li><a href="free-plantation.html">Free Plantation</a></li>
+                        <li><a href="vocational.html">Vocational Training</a></li>
                     </ul>
                 </div>
                 
@@ -1117,12 +1165,14 @@
         const navMenu = document.getElementById('nav-menu');
         const overlay = document.getElementById('overlay');
         
-        hamburger.addEventListener('click', () => {
+        function toggleMobileMenu() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
             overlay.classList.toggle('active');
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
+            document.body.classList.toggle('no-scroll');
+        }
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
         
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-link').forEach(link => {
@@ -1130,7 +1180,7 @@
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
                 overlay.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.classList.remove('no-scroll');
             });
         });
         
@@ -1139,7 +1189,7 @@
             hamburger.classList.remove('active');
             navMenu.classList.remove('active');
             overlay.classList.remove('active');
-            document.body.style.overflow = '';
+            document.body.classList.remove('no-scroll');
         });
         
         // Dropdown functionality for mobile
